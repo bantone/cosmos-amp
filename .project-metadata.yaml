@@ -29,7 +29,7 @@ environment_variables:
 runtimes:
   - editor: PBJ Workbench
     kernel: Python 3.10
-    edition: Standard
+    edition: Nvidia GPU
 
 tasks:
   - type: create_job
@@ -40,8 +40,8 @@ tasks:
     short_summary: >-
       Creates a job that verifies a compatible GPU (≥ 18 GB VRAM) is available
       and that all required Python packages are installed.
-    cpu: 2
-    memory: 4
+    cpu: 8
+    memory: 24
     gpu: 1
 
   - type: run_job
@@ -49,8 +49,8 @@ tasks:
     entity_label: check-gpu
     short_summary: >-
       Runs the GPU check job. Review the job output before proceeding.
-    cpu: 2
-    memory: 4
+    cpu: 8
+    memory: 24
     gpu: 1
 
   - type: start_application
