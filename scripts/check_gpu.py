@@ -110,7 +110,6 @@ def check_transformers() -> None:
     packages = {
         "transformers":   "nvidia/Cosmos-Reason2-8B uses Qwen3VLForConditionalGeneration",
         "accelerate":     "required for device_map='auto'",
-        "huggingface_hub":"used for local cache detection",
         "cv2":            "video frame decoding",
         "PIL":            "image processing (Pillow)",
         "streamlit":      "web application framework",
@@ -127,23 +126,16 @@ def check_transformers() -> None:
 
 def check_model_cache() -> None:
     section("Model cache")
-    try:
-        from huggingface_hub import try_to_load_from_cache, scan_cache_dir
-        import os
-
-        cache_dir = os.environ.get("HF_HOME", os.path.expanduser("~/.cache/huggingface"))
-        print(f"  Cache directory: {cache_dir}")
-
-        cached = try_to_load_from_cache("nvidia/Cosmos-Reason2-8B", "config.json")
-        if cached:
-            print("  ✓  Model weights found in local cache — no download needed")
-        else:
-            print("  ⚠  Model NOT in local cache")
-            print("     First run will download ~16 GB from HuggingFace Hub")
-            print("     Run scripts/download_model.py as a Job to pre-fetch weights")
-
-    except Exception as exc:
-        print(f"  Could not inspect cache: {exc}")
+    import os
+    cache_dir = os.environ.get("HF_HOME", os.path.expanduser("~/.cache/huggingface"))
+    model_dir = os.path.join(cache_dir, "hub", "models--nvidia--Cosmos-Reason2-8B")
+    print(f"  Cache directory: {cache_dir}")
+    if os.path.isdir(model_dir):
+        print("  ✓  Model weights found in local cache — no download needed")
+    else:
+        print("  ⚠  Model NOT in local cache")
+        print("     First run will download ~16 GB from HuggingFace Hub")
+        print("     Run scripts/download_model.py as a Job to pre-fetch weights")
 
 
 def main() -> None:

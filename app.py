@@ -275,8 +275,6 @@ def _advance(step_key: str) -> None:
 
 
 def _load_model_thread() -> None:
-    from huggingface_hub import try_to_load_from_cache
-
     try:
         with _LOAD_LOCK:
             _LOAD["start_time"] = time.time()
@@ -285,9 +283,6 @@ def _load_model_thread() -> None:
 
         # 1 · Resolve
         _advance("resolving")
-        cached = try_to_load_from_cache(MODEL_NAME, "config.json")
-        if not cached:
-            transformers.AutoConfig.from_pretrained(MODEL_NAME)
 
         # 2 · Config
         _advance("config")
