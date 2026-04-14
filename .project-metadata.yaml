@@ -1,0 +1,59 @@
+name: Cosmos Reason2-8B Visual Q&A
+description: >-
+  Interactive visual question-answering application powered by NVIDIA Cosmos Reason2-8B.
+  Upload or browse a folder of images and videos, then ask multi-turn questions in natural
+  language. Chain-of-thought reasoning traces are displayed inline. Runs entirely on-cluster
+  using HuggingFace Transformers — no external API required.
+author: Cloudera AI
+specification_version: "1.0"
+prototype_version: "1.0"
+
+environment_variables:
+  MODEL_NAME:
+    default: "nvidia/Cosmos-Reason2-8B"
+    description: "HuggingFace model identifier for the Cosmos vision-language model"
+    required: true
+  VIDEO_FPS:
+    default: "4"
+    description: "Frames per second to sample when processing video inputs"
+    required: false
+  MAX_NEW_TOKENS:
+    default: "4096"
+    description: "Maximum number of tokens the model will generate per response"
+    required: false
+  HF_HOME:
+    default: "/home/cdsw/.cache/huggingface"
+    description: "HuggingFace cache directory — set to a persistent volume path to avoid re-downloading weights"
+    required: false
+
+runtimes:
+  - editor: PBJ Workbench
+    kernel: Python 3.10
+    edition: Standard
+
+tasks:
+  - type: run_job
+    name: Check GPU Availability
+    entity_label: check-gpu
+    script: scripts/check_gpu.py
+    kernel: python3
+    short_summary: >-
+      Verifies that a compatible GPU (≥ 18 GB VRAM) is available and that all
+      required Python packages are installed. Review the job output before proceeding.
+    cpu: 2
+    memory: 4
+    gpu: 1
+
+  - type: start_application
+    name: Cosmos Reason2-8B Visual Q&A
+    entity_label: app
+    script: launch_app.py
+    subdomain: cosmos-qa
+    short_summary: >-
+      Launches the Streamlit application. The model loads automatically in the
+      background on first visit — no separate model-serving step required.
+    cpu: 4
+    memory: 32
+    gpu: 1
+    environment_variables:
+      TASK_TYPE: START_APPLICATION
