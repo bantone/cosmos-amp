@@ -61,8 +61,8 @@ tasks:
     short_summary: >-
       Launches the Streamlit application. The model loads automatically in the
       background on first visit — no separate model-serving step required.
-    cpu: 4
-    memory: 32
+    cpu: 8
+    memory: 24
     gpu: 1
     environment_variables:
       TASK_TYPE: START_APPLICATION
