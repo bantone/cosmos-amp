@@ -13,7 +13,11 @@ Exit codes:
   1 — no CUDA devices, or insufficient VRAM
 """
 
+import subprocess
 import sys
+
+# Ensure dependencies are installed (in case the project build step was skipped)
+subprocess.check_call([sys.executable, "-m", "pip", "install", "--quiet", "-r", "requirements.txt"])
 
 SEP    = "─" * 62
 BANNER = "🪐  Cosmos Reason2-8B — GPU Availability Check"
