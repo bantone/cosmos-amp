@@ -9,7 +9,10 @@ No GPU required — CPU-only with ~8 GB RAM is sufficient.
 """
 
 import os
+import subprocess
 import sys
+
+subprocess.check_call([sys.executable, "-m", "pip", "install", "-r", "requirements.txt"])
 
 MODEL_NAME = os.environ.get("MODEL_NAME", "nvidia/Cosmos-Reason2-8B")
 CACHE_DIR  = os.environ.get("HF_HOME", os.path.expanduser("~/.cache/huggingface"))
