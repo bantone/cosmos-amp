@@ -2,6 +2,7 @@
 # torch is provided by the Nvidia GPU runtime — do not reinstall
 transformers>=4.44.0
 accelerate>=0.33.0
+torchvision
 
 # Media processing
 opencv-python>=4.11.0
