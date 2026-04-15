@@ -25,6 +25,10 @@ environment_variables:
     default: "/home/cdsw/.cache/huggingface"
     description: "HuggingFace cache directory — set to a persistent volume path to avoid re-downloading weights"
     required: false
+  HF_TOKEN:
+    default: ""
+    description: "HuggingFace access token — required to download gated models such as nvidia/Cosmos-Reason2-8B. Generate one at huggingface.co/settings/tokens"
+    required: true
 
 runtimes:
   - editor: PBJ Workbench
