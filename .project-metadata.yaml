@@ -32,6 +32,29 @@ runtimes:
     edition: Nvidia GPU
 
 tasks:
+  - type: create_job
+    name: Download Model Weights
+    entity_label: download-model
+    script: scripts/download_model.py
+    kernel: python3
+    short_summary: >-
+      Creates a job that pre-downloads the Cosmos Reason2-8B model weights
+      (~16 GB) to the local HuggingFace cache. Run this before launching
+      the application to avoid a slow download at startup.
+    cpu: 2
+    memory: 8
+    gpu: 0
+
+  - type: run_job
+    name: Download Model Weights
+    entity_label: download-model
+    short_summary: >-
+      Downloads model weights to cache. Wait for this to complete before
+      starting the application.
+    cpu: 2
+    memory: 8
+    gpu: 0
+
   - type: start_application
     name: Cosmos Reason2-8B Visual Q&A
     entity_label: app
