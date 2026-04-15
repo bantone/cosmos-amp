@@ -32,27 +32,6 @@ runtimes:
     edition: Nvidia GPU
 
 tasks:
-  - type: create_job
-    name: Check GPU Availability
-    entity_label: check-gpu
-    script: scripts/check_gpu.py
-    kernel: python3
-    short_summary: >-
-      Creates a job that verifies a compatible GPU (≥ 18 GB VRAM) is available
-      and that all required Python packages are installed.
-    cpu: 8
-    memory: 24
-    gpu: 1
-
-  - type: run_job
-    name: Check GPU Availability
-    entity_label: check-gpu
-    short_summary: >-
-      Runs the GPU check job. Review the job output before proceeding.
-    cpu: 8
-    memory: 24
-    gpu: 1
-
   - type: start_application
     name: Cosmos Reason2-8B Visual Q&A
     entity_label: app
